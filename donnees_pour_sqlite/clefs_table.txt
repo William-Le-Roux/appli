@@ -1,0 +1,30 @@
+ATTRIBUTS
+id = clef etrangere (gares.codeunique)
+
+COORDONNEES
+codeunique = clef etrangere (gares.codeunique)
+
+EXPLOITANTS
+id = clef primaire
+
+GARES
+codeunique = clef primaire
+
+GARES EXPLOITANTS
+gareid = clef etrangere (gares.codeunique)
+exploitantid = clef etrangere (exploitants.id)
+
+GARES LIGNES
+gareid = clef etrangère (gares.codeunique)
+ligneid = clef etrangère (lignes.id)
+
+GARES MODES
+gareid = clef etrangere (gare.codeunique)
+modeid = clef etrangere (modes.id)
+
+LIGNES
+id = clef primaire
+
+MODES
+id = clef primaire
+
