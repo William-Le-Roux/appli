@@ -1,0 +1,10 @@
+#ignorer le fichier .env
+.env
+
+#ignorer la bdd (elle peut etre créée par le code python)
+/donnees_pour_sqlite/gares.sqlite
+
+#ignorer le dossier env
+/env
+
+
