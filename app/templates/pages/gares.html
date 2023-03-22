@@ -1,0 +1,35 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+    <h1>{% block title %} La liste des gares d'Ile-de-France par ordre alphabétique {% endblock %}</h1>
+    {%if pagination%}
+    {% include 'partials/pagination.html' %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Station</th>
+                <th scope="col">Lignes</th>
+                <th scope="col">...</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%for gare in pagination.items%}
+            <tr>
+                <th scope="row"><a href="{{ url_for('gare', codeunique=gare.codeunique)}}">{{gare.label}}</a></th>
+                <td>
+                    {%for ligne in gare.lignes%}
+                        {% if loop.index > 1 %}
+                            , 
+                        {%endif%}
+                        {{ligne.label}}
+                    {%endfor%}
+                </td>
+                <td><a href="{{ url_for('gare', codeunique=gare.codeunique)}}">Voir la station sur une carte</a></td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    {%else%}
+        <p>Il n'y a pas de gare dans les donnees</p>
+    {%endif%}
+{% endblock %}

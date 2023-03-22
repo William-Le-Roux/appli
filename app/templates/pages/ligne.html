@@ -1,0 +1,24 @@
+{% extends 'pages/base.html' %}
+{% include 'partials/css_leaflet.html' %}
+
+{% block content %}
+    {%if resultat %}
+    <h1>{% block title %} Ligne : {{resultat.label}} {% endblock %}</h1>
+    <ul>
+        <li>Identifiant : <strong>{{resultat.id}}</strong></li>
+        <li> Stations :
+            <ul> 
+                {% for gare in resultat.lignes %}
+                    <li><a href="{{ url_for('gare', codeunique=gare.codeunique)}}">{{gare.label}}</a></li>
+                {%endfor%}
+            </ul>
+        </li>
+    </ul>
+    {%endif%}
+    {%if donnees %}
+    <div id="map"></div>
+        {% block JavaScript %}
+        {% include 'partials/js_leaflet.html' %}
+        {% endblock %}
+    {%endif%}
+{% endblock %}

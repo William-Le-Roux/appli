@@ -1,0 +1,17 @@
+{% extends 'pages/base.html' %}
+
+{% block content %}
+    <h1>{% block title %} La liste des lignes d'Ile-de-France par ordre alphabétique {% endblock %}</h1>
+    {%if donnees %}
+        {%for lettre in donnees.keys() %}
+        <ul>
+            {{lettre}}
+            {%for ligne in donnees[lettre] %}
+                <li><a href="{{ url_for('ligne', id=ligne[0])}}">{{ligne[1]}}</a></li>
+            {%endfor%}
+        </ul>
+        {%endfor%}
+    {%else%}
+        <p>Il n'y a pas de ligne dans les donnees</p>
+    {%endif%}
+{% endblock %}
