@@ -1,12 +1,18 @@
-<!-- Make sure you put this AFTER Leaflet's CSS -->
+<!-- Leafleft JS pour afficher les cartes -->
+<!-- appel de la librairie leaflet en JS -->
 <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
 integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
 crossorigin=""></script>
+
 <script>
-    const geoJSON = {{ donnees|tojson }}
-    if (geoJSON.features.length == 1) {
+    /* mettre les données des routes en geoJSON */
+    const geoJSON = {{ donnees|tojson }} //utilisation de Jinja pour réupérer les données renvoyées par les routes
+    // pour centrer sur les coordonnées d'une gare et déterminer le niveau du zoom
+    if (geoJSON.features.length == 1) { 
         center = geoJSON.features[0].properties.geoPoint;
-        zoom = 13;
+        zoom = 13; 
+/* // pour centrer sur le barycentre des gares appelées et déterminer le niveau du zoom, que ce soit l'ensemble 
+des gares ou seulement celles d'une ligne */
     } else {
         latitudes = 0.0;
         longitudes = 0.0;
@@ -17,13 +23,15 @@ crossorigin=""></script>
         center = [(latitudes/geoJSON.features.length).toString(), (longitudes/geoJSON.features.length).toString()];
         zoom = 9;
     }
+   /*  création de la carte via la librairie leaflet */
     const map = L.map('map').setView(center, zoom);
-
-    const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+/* ajout du fond de carte openstreetmap à l'objet map */
+   const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
-
+/* création et affichage de chaque marqueur ainsi que d'un pop-up affichant le nom de la gare et les lignes associées. 
+améliorer l'affichage des lignes ds la pop-up en supprimant l'identifiant*/
     L.geoJSON(geoJSON,
     {onEachFeature: function (feature, layer) {
                     var popupContent = '<p>Nom : '+
