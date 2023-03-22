@@ -1,0 +1,11 @@
+{% extends 'pages/base.html' %}
+{% include 'partials/css_leaflet.html' %}
+
+
+{% block content %}
+    <h1>{% block title %} Carte des gares d'Ile-de-France {% endblock %}</h1>
+    <div id="map"></div>
+    {% block JavaScript %}
+    {% include 'partials/js_leaflet.html' %}
+    {% endblock %}
+{% endblock %}

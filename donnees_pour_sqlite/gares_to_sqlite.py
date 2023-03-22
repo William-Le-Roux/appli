@@ -7,8 +7,8 @@ from datetime import datetime
 import re
 
 # variables 
-GARES_CSV_FILEPATH = "/home/tnah/Documents/application_python-main/donnees_pour_sqlite/emplacement-des-gares-idf-data-generalisee.csv"
-GARES_SQLITE_FILEPATH = "/home/tnah/Documents/application_python-main/donnees_pour_sqlite/gares.sqlite"
+GARES_CSV_FILEPATH = "./emplacement-des-gares-idf-data-generalisee.csv"
+GARES_SQLITE_FILEPATH = "./gares.sqlite"
 DATATYPES = {'id_ref_lda': np.int64,
            'id_ref_zdl': np.int64,
            'idrefliga': 'str',
@@ -196,6 +196,7 @@ except Exception as e :
 ##########
 print(str(datetime.now()) + " Création des données pour la table coordonnees")
 coordonnees = df[["codeunique", "Geo Point", "Geo Shape", "x", "y"]]
+coordonnees.rename(columns={"Geo Point":"geoPoint", "Geo Shape":"geoShape"}, inplace=True)
 
 # création table et insertion des données
 try:
@@ -210,6 +211,7 @@ try:
 except Exception as e :
     print(e)
     sys.exit()
+
 
 ##########
 #remplissage table des flags des attributs flagés

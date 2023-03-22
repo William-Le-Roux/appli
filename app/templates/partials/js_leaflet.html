@@ -1,0 +1,40 @@
+<!-- Make sure you put this AFTER Leaflet's CSS -->
+<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
+crossorigin=""></script>
+<script>
+    const geoJSON = {{ donnees|tojson }}
+    if (geoJSON.features.length == 1) {
+        center = geoJSON.features[0].properties.geoPoint;
+        zoom = 13;
+    } else {
+        latitudes = 0.0;
+        longitudes = 0.0;
+        for (let i = 0; i < geoJSON.features.length; i++) {
+            latitudes += parseFloat(geoJSON.features[i].properties.geoPoint[0]);
+            longitudes += parseFloat(geoJSON.features[i].properties.geoPoint[1]);
+        }
+        center = [(latitudes/geoJSON.features.length).toString(), (longitudes/geoJSON.features.length).toString()];
+        zoom = 9;
+    }
+    const map = L.map('map').setView(center, zoom);
+
+    const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    L.geoJSON(geoJSON,
+    {onEachFeature: function (feature, layer) {
+                    var popupContent = '<p>Nom : '+
+                        '<strong><a href="/gare/'+feature.properties.id+'">'+
+                            feature.properties.name+'</a></strong></p>'+
+                            '<p>Ligne(s) : '+feature.properties.lignes+'</p>';
+                    layer.bindPopup(popupContent);
+                    return L.marker(feature.geometry.coordinates);
+                }}
+    ).addTo(map);
+
+    map.on('click', onMapClick);
+
+</script>

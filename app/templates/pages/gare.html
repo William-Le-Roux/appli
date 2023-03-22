@@ -1,0 +1,26 @@
+{% extends 'pages/base.html' %}
+{% include 'partials/css_leaflet.html' %}
+
+{% block content %}
+    {%if donnees %}
+    <h1>{% block title %} Gare de {{donnees["features"][0]["properties"]["label"]}} {% endblock %}</h1>
+        {% for feature in donnees["features"] %}
+            <ul>
+                <li>Identifiant : <strong>{{feature["properties"]["id"]}}</strong></li>
+                <li>Lignes :
+                    <ul> 
+                        {% for ligne in feature["properties"]["lignes"] %}
+                            <li><a href="{{ url_for('ligne', id=ligne[0])}}">{{ligne[1]}}</a></li>
+                        {%endfor%}
+                    </ul>
+                </li>
+                <li>coordonnees : <strong>{{feature["properties"]["geoPoint"]}}</strong></li>
+            </ul>
+        {%endfor%}
+    
+    <div id="map"></div>
+        {% block JavaScript %}
+        {% include 'partials/js_leaflet.html' %}
+        {% endblock %}
+    {%endif%}
+{% endblock %}
