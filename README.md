@@ -44,7 +44,7 @@ GARES_PER_PAGE=20
 
 python flask_app
 
-#### *L'application est consultable sur le http://localhost:5000 de votre navigateur. *
+#### *L'application est consultable sur le http://localhost:5000 de votre navigateur.*
 
 
 
