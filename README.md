@@ -9,7 +9,7 @@ https://data.iledefrance-mobilites.fr/explore/dataset/emplacement-des-gares-idf-
 #### *Télécharger/cloner le dossier de l'application sur votre ordinateur*
 
 #### *Se rendre dans la racine de l'application, et installer un environnement virtuel*
-#### (sur la console Linux:) 
+#### *(sur la console Linux:)* 
 
 virtualenv env -p python3
 
@@ -18,21 +18,21 @@ virtualenv env -p python3
 
 source env/bin/activate
 
-#### *Installer les modules nécessaires au fonctionnement de l'application: 
+#### *Installer les modules nécessaires au fonctionnement de l'application:* 
 
 pip install -r requirements.txt
 
-#### *Ensuite, créer la base de données en SQLite à partir du fichier .csv fourni: 
-#### *Se rendre dans le sous dossier donnees_pour_sqlite, et exécuter le code python de création de la base:
+#### *Ensuite, créer la base de données en SQLite à partir du fichier .csv fourni. *
+#### *Se rendre dans le sous dossier donnees_pour_sqlite, et exécuter le code python de création de la base:*
 
 python gares_to_sqlite.py
 
-#### *La base de données est maintenant créée dans le dossier ("gares.sqlite"). 
-#### *Ensuite, revenir à la racine de l'application, et créer un fichier .env:
+#### *La base de données est maintenant créée dans le dossier ("gares.sqlite").* 
+#### *Ensuite, revenir à la racine de l'application, et créer un fichier .env:*
 
 touch .env
 
-#### *Editer ce fichier avec les informations suivantes:
+#### *Editer ce fichier avec les informations suivantes:*
 
 DEBUG=True
 
@@ -40,11 +40,11 @@ SQLALCHEMY_DATABASE_URI=sqlite:<spécifier le chemin vers la base de données SQ
 
 GARES_PER_PAGE=20
 
-#### *Une fois fait, exécuter l'application:
+#### *Une fois fait, exécuter l'application:*
 
 python flask_app
 
-#### *L'application est consultable sur le http://localhost:5000 de votre navigateur. 
+#### *L'application est consultable sur le http://localhost:5000 de votre navigateur. *
 
 
 
