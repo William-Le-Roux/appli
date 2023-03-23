@@ -1,18 +1,21 @@
 # application_python
-### Application sur les gares en Ile de France, pour le cours de Python de Maxime Challon, TNAH 2022-2023
+## Application sur les gares en Ile de France, pour le cours de Python de Maxime Challon, TNAH 2022-2023
 
 L'application utilise le jeu de données disponible sur le site Ile de France Mobilités (consultation mars 2023):
 https://data.iledefrance-mobilites.fr/explore/dataset/emplacement-des-gares-idf-data-generalisee/table/
 
 
-Processus d'installation: 
-Télécharger/cloner le dossier de l'application sur votre ordinateur
+## Processus d'installation: 
+#### *Télécharger/cloner le dossier de l'application sur votre ordinateur*
 
-Se rendre dans la racine de l'application
-installer un environnement virtuel. Sur la console Linux: 
+#### *Se rendre dans la racine de l'application, et installer un environnement virtuel*
+#### (sur la console Linux:) 
+
 virtualenv env -p python3
 
-Activer l'environnement virtuel:
+
+#### *Activer l'environnement virtuel:*
+
 source env/bin/activate
 
 Installer les modules nécessaires au fonctionnement de l'application: 
