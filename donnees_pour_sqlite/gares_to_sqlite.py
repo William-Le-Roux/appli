@@ -55,6 +55,9 @@ except:
 # création de la base de données
 conn = db.connect(GARES_SQLITE_FILEPATH)
 
+#creation d'un curseur qui sera appelé pour la création de la table utiliateur en dehors du csv
+c = conn.cursor()
+
 # création du dataframe pandas à partir du csv
 df= pd.read_csv(filepath_or_buffer=GARES_CSV_FILEPATH,
     sep=";",
@@ -341,5 +344,15 @@ try:
         )
     print(str(datetime.now()) + " Données correctement insérées")
 except Exception as e :
+    print(e)
+    sys.exit()
+
+
+try:
+    print(str(datetime.nom()) + " Création d'une table utilisateurs")
+    c.execute("CREATE TABLE users (userid INTEGER PRIMARY KEY AUTOINCREMENT, pseudo NVARCHAR(20), password NVARCHAR(20), administrateur INTEGER DEFAULT 0")
+    print(str(datetime.nom()) + " Table correctement créée")
+
+except Exception as e:
     print(e)
     sys.exit()
