@@ -6,10 +6,22 @@ gares_lignes = db.Table(
     db.Column('ligneid', db.Integer, db.ForeignKey('lignes.id'), primary_key=True)
 )
 
+gares_modes = db.Table(
+    "gares_modes",
+    db.Column('gareid', db.Integer, db.ForeignKey('gares.codeunique'), primary_key=True),
+    db.Column('modeid', db.Integer, db.ForeignKey('modes.id'), primary_key=True)
+)
+
+gares_exploitants = db.Table(
+    "gares_exploitants",
+    db.Column('gareid', db.Integer, db.ForeignKey('gares.codeunique'), primary_key=True),
+    db.Column('exploitantid', db.Integer, db.ForeignKey('exploitants.id'), primary_key=True)
+)
+
 class Gares(db.Model):
     __tablename__ = "gares"
 
-    codeunique	= db.Column(db.Integer, primary_key=True )
+    codeunique	= db.Column(db.Integer, primary_key=True)
     nom_long = db.Column(db.String(100))
     label = db.Column(db.String(100))
     id_ref_lda = db.Column(db.Integer)
@@ -19,18 +31,22 @@ class Gares(db.Model):
     idrefliga= db.Column(db.String(100))
     idrefligc= db.Column(db.String(100))
 
-    # propriétés de relation
-    coordonnees = db.relationship(
-        'Coordonnees', 
-        backref='geom', 
-        lazy=True
-    )
+# PROPRIETE DE RELATIONS
+    coordonnees = db.relationship('Coordonnees', backref='geom', lazy=True)
 
-    lignes = db.relationship(
-      'Lignes', 
-      secondary=gares_lignes, 
-      backref="lignes"
-  )
+    attributs = db.relationship('Attributs', backref='attributss', lazy=True)
+
+#TABLES DE RELATIONS - Verifier la première (lignes ou gares_lignes?)
+    gares_ligness = db.relationship(
+        'Lignes', secondary=gares_lignes, backref="gares_ligness")
+    
+    gares_exploitantss = db.relationship(
+        'Exploitants', secondary=gares_exploitants, backref="gares_exploitantss")
+
+    gares_modess = db.relationship('Modes', secondary=gares_modes, backref="gares_modess")
+
+
+
 
 class Coordonnees(db.Model):
     __tablename__ = "coordonnees"
@@ -41,6 +57,49 @@ class Coordonnees(db.Model):
     x = db.Column(db.String(50))
     y = db.Column(db.String(50))
 
+
+
+
 class Lignes(db.Model):
+    __tablename__="lignes"
     id = db.Column(db.Integer, primary_key=True)
     label = db.Column(db.String(100))
+
+    lignes = db.relationship(
+      'Gares', 
+      secondary=gares_lignes, 
+      backref="lignes"
+    )
+
+class Attributs(db.Model):
+    __tablename__ = "attributs"
+
+    id = db.Column(db.Integer, db.ForeignKey('gares.codeunique'), primary_key=True)
+    valeur = db.Column(db.Integer)
+    relation = db.Column(db.Text)
+
+
+
+
+class Exploitants(db.Model):
+    __tablename__ = "exploitants"
+    id = db.Column(db.Integer(), primary_key=True)
+    label = db.Column(db.Text)
+
+    gares_exploitants = db.relationship(
+        'Gares',
+        secondary=gares_exploitants,
+        backref="gares_exploitants"
+    )
+
+
+class Modes(db.Model):
+    __tablename__ = "modes"
+    id = db.Column(db.Integer, primary_key=True)
+    label = db.Column(db.Text)
+
+    gares_modes = db.relationship(
+        'Gares',
+        secondary=gares_modes,
+        backref="gares_modes"
+    )    

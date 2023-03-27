@@ -6,6 +6,7 @@ import sys
 from datetime import datetime
 import re
 
+
 # variables 
 GARES_CSV_FILEPATH = "./emplacement-des-gares-idf-data-generalisee.csv"
 GARES_SQLITE_FILEPATH = "./gares.sqlite"
@@ -349,10 +350,18 @@ except Exception as e :
 
 
 try:
-    print(str(datetime.nom()) + " Création d'une table utilisateurs")
-    c.execute("CREATE TABLE users (userid INTEGER PRIMARY KEY AUTOINCREMENT, pseudo NVARCHAR(20), password NVARCHAR(20), administrateur INTEGER DEFAULT 0")
-    print(str(datetime.nom()) + " Table correctement créée")
+    print(str(datetime.now()) + " Création d'une table utilisateurs")
+    c.execute("CREATE TABLE users (userid INTEGER PRIMARY KEY AUTOINCREMENT, pseudo NVARCHAR(20), password NVARCHAR(20), administrateur INTEGER DEFAULT 0)")
+    print(str(datetime.now()) + " Table correctement créée")
 
 except Exception as e:
     print(e)
     sys.exit()
+
+
+#def creation_admin():
+    admin_name = input("Veuillez entrer un pseudo pour l'Administrateur")
+    print(admin_name)
+    admin_password = generate_password_hash(input("Veuillez entrer un mot de passe"))
+    print(admin_password)
+    c.execute(f'INSERT INTO users (pseudo, password, administrateur) VALUES ({admin_name}, {admin_password}, 1')

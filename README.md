@@ -22,13 +22,7 @@ source env/bin/activate
 
 pip install -r requirements.txt
 
-#### *Ensuite, créer la base de données en SQLite à partir du fichier .csv fourni. *
-#### *Se rendre dans le sous dossier donnees_pour_sqlite, et exécuter le code python de création de la base:*
-
-python gares_to_sqlite.py
-
-#### *La base de données est maintenant créée dans le dossier ("gares.sqlite").* 
-#### *Ensuite, revenir à la racine de l'application, et créer un fichier .env:*
+#### *Ensuite, créer un fichier .env:*
 
 touch .env
 
@@ -36,9 +30,24 @@ touch .env
 
 DEBUG=True
 
-SQLALCHEMY_DATABASE_URI=sqlite:<spécifier le chemin vers la base de données SQLite créée à l'étape précédente>
+SQLALCHEMY_DATABASE_URI=sqlite:<spécifier le chemin vers le répertoire dans lequel vous souhaitez créer la base de données>/gares.sqlite
 
 GARES_PER_PAGE=20
+
+WTF_CSRF_ENABLE = True
+
+SECRET_KEY=<tapez une longue suite de caractères aléatoires. Attention, s'assurer de ne JAMAIS la modifier par la suite>
+
+
+#### *Ensuite, créer la base de données en SQLite à partir du fichier .csv fourni.*
+#### *Se rendre dans le sous dossier donnees_pour_sqlite, et exécuter le code python de création de la base:*
+
+python gares_to_sqlite.py
+
+
+
+#### *La base de données est maintenant créée dans le dossier ("gares.sqlite").* 
+
 
 #### *Une fois fait, exécuter l'application:*
 
