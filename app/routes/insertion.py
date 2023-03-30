@@ -1,8 +1,7 @@
-#vérifier que les appels sont les bons
 from ..app import app, db
 from flask import render_template, request, flash
-from ..models.gare import Gare, Ligne
-from ..models.formulaires import insertion_gare, insertion_ligne
+from ..models.gares import Gares, Lignes
+from ..models.formulaires import InsertionGare, InsertionLigne
 from ..utils.transformations import  clean_arg
 
 @app.route("/insertions/gare", methods=['GET', 'POST'])
@@ -13,12 +12,10 @@ def insertion_gare():
         if form.validate_on_submit():
             nom_gare =  clean_arg(request.form.get("nom_gare", None))
             code_gare =  clean_arg(request.form.get("code_gare", None))
-            introduction =  clean_arg(request.form.get("introduction", None))
             lignes =  clean_arg(request.form.getlist("ligne", None))
 
-            nouvelle_gare = Gare(id=code_gare, 
-                Introduction=introduction,
-                name=nom_gare)
+            nouvelle_gare = Gares(Gares.codeunique == code_gare, 
+                Gares.label == nom_gare)
 
             for ligne in lignes:
                 ligne = Lignes.\
@@ -52,8 +49,8 @@ def insertion_ligne():
             nom_ligne =  clean_arg(request.form.get("nom_ligne", None))
             id_ligne =  clean_arg(request.form.get("code_ligne", None))
 
-            nouvelle_ressource = Lignes(id=id_ligne, 
-                name=nom_ligne)
+            nouvelle_ligne = Lignes(Lignes.id == id_ligne, 
+                Lignes.label == nom_ligne)
 
             db.session.add(nouvelle_ligne)
             db.session.commit()
@@ -66,5 +63,5 @@ def insertion_ligne():
         db.session.rollback()
     
     return render_template("pages/insertion_ligne.html", 
-            sous_titre= "Insertion ressource" , 
+            sous_titre= "Insertion ligne" , 
             form=form)

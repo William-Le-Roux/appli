@@ -51,25 +51,25 @@
             <div class="list-group" id="list-tab" role="tablist">
                 {%if donnees.prev_num %}
                 <a class="list-group-item list-group-item-action" id="list-list-prev"
-                    href="{{ url_for('pays', page=donnees.prev_num) }}" class="btn btn-outline-dark 
+                    href="{{ url_for('gares', page=donnees.prev_num) }}" class="btn btn-outline-dark 
                     {% if donnees.page == 1 %}disabled{% endif %}">
                     &laquo;
                 </a>
                 {% endif %}
 
-                {% for pays in donnees.items %}
-                {% if (donnees.items).index(pays) == 0 %}
-                <a class="list-group-item list-group-item-action active" id="list-{{pays.id}}-list" data-toggle="list"
-                    href="#list-{{pays.id}}" role="tab" aria-controls="{{pays.id}}">{{pays.name | safe}}</a>
+                {% for gares in donnees.items %}
+                {% if (donnees.items).index(gares) == 0 %}
+                <a class="list-group-item list-group-item-action active" id="list-{{gares.id}}-list" data-toggle="list"
+                    href="#list-{{gares.id}}" role="tab" aria-controls="{{gares.id}}">{{gares.name | safe}}</a>
                 {% else %}
-                <a class="list-group-item list-group-item-action" id="list-{{pays.id}}-list" data-toggle="list"
-                    href="#list-{{pays.id}}" role="tab" aria-controls="{{pays.id}}">{{pays.name | safe}}</a>
+                <a class="list-group-item list-group-item-action" id="list-{{gares.id}}-list" data-toggle="list"
+                    href="#list-{{gares.id}}" role="tab" aria-controls="{{gares.id}}">{{gares.name | safe}}</a>
                 {% endif %}
                 {% endfor %}
 
                 {%if donnees.next_num %}
                 <a class="list-group-item list-group-item-action" id="list-list-next"
-                    href="{{ url_for('pays', page=donnees.next_num) }}" class="btn btn-outline-dark 
+                    href="{{ url_for('gares', page=donnees.next_num) }}" class="btn btn-outline-dark 
                         {% if donnees.page == donnees.pages %}disabled{% endif %}">
                     &raquo;
                 </a>
@@ -78,20 +78,18 @@
         </div>
         <div class="col-8">
             <div class="tab-content" id="nav-tabContent">
-                {% for pays in donnees.items %}
-                {% if (donnees.items).index(pays) == 0 %}
-                <div class="tab-pane fade show active" id="list-{{pays.id}}" role="tabpanel"
-                    aria-labelledby="list-{{pays.id}}-list">
-                    <a href="{{ url_for('un_pays', nom_pays=pays.name) }}"> Voir les données de {{pays.name | safe}}</a>
+                {% for gares in donnees.items %}
+                {% if (donnees.items).index(gares) == 0 %}
+                <div class="tab-pane fade show active" id="list-{{gares.codeunique}}" role="tabpanel"
+                    aria-labelledby="list-{{gares.codeunique}}-list">
+                    <a href="{{ url_for('gare', nom_gare=gares.label) }}"> Voir les données de {{gares.label | safe}}</a>
                     <br>
-                    {{pays.Introduction | safe}}
                 </div>
                 {% else %}
-                <div class="tab-pane fade " id="list-{{pays.id}}" role="tabpanel"
-                    aria-labelledby="list-{{pays.id}}-list">
-                    <a href="{{ url_for('un_pays', nom_pays=pays.name) }}"> Voir les données de {{pays.name | safe}}</a>
+                <div class="tab-pane fade " id="list-{{gares.id}}" role="tabpanel"
+                    aria-labelledby="list-{{gares.id}}-list">
+                    <a href="{{ url_for('un_gares', nom_gares=gares.name) }}"> Voir les données de {{gares.name | safe}}</a>
                     <br>
-                    {{pays.Introduction | safe}}
                 </div>
                 {% endif %}
 

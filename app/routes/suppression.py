@@ -1,18 +1,17 @@
-#vérifier que les appels sont les bons
 from ..app import app, db
 from flask import render_template, request, flash
-from ..models.gares import Gare, Ligne
-from ..models.formulaires import  Suppression_Gare, Suppression_Ligne
+from ..models.gares import Gares, Lignes
+from ..models.formulaires import  SuppressionGare, SuppressionLigne
 from ..utils.transformations import  clean_arg
 
 @app.route("/suppressions/gare", methods=['GET', 'POST'])
 def suppression_gare():
     form = SuppressionGare()
-    form.nom_gare.choices = [('','')] + [(gare.id, gare.name) for gare in Gare.query.all()]
+    form.nom_gare.choices = [('','')] + [(Gares.codeunique, Gares.label) for gare in Gares.query.all()]
 
     def delete_gare(gare):
         # vérifier que le code existe bien en base
-        gare = Gare.query.get(code_gare)
+        gare = Gares.query.get(code_gare)
         if gare:
             db.session.delete(gare)
             db.session.commit()
@@ -43,11 +42,11 @@ def suppression_gare():
 @app.route("/suppressions/ligne", methods=['GET', 'POST'])
 def suppression_ligne():
     form = SuppressionLigne()
-    form.nom_ligne.choices = [('','')] + [(ligne.id, ligne.name) for ligne in Ligne.query.all()]
+    form.nom_ligne.choices = [('','')] + [(Lignes.id, Lignes.label) for ligne in Lignes.query.all()]
 
     def delete_ligne(ligne):
         # vérifier que le code existe bien en base
-        ligne = Resources.query.get(ligne)
+        ligne = Lignes.query.get(ligne)
         if ligne:
             db.session.delete(ligne)
             db.session.commit()

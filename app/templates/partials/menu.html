@@ -20,7 +20,44 @@
       <li class="nav-item active">
         <a class="nav-link" href="{{ url_for('recherche') }}">Recherche</a>
       </li>
-      
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Insertions
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="{{ url_for('insertion_gare') }}">Gare</a>
+          <a class="dropdown-item" href="{{ url_for('insertion_ligne') }}">Ligne</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Suppressions
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown2">
+          <a class="dropdown-item" href="{{ url_for('suppression_gare') }}">Gare</a>
+          <a class="dropdown-item" href="{{ url_for('suppression_ligne') }}">Ligne</a>
+        </div>
+      </li>
       </ul>
+  </div>
+  <div  class="collapse navbar-collapse" id="navbarSupportedContent" alignment="right">
+    <ul class="navbar-nav mr-auto">
+        {% if current_user.is_authenticated %}
+        <li class="nav-item active">
+          <a  class="nav-link" href="{{ url_for('ajout_utilisateur') }}">Ajout utilisateur</a>
+        </li>
+        <li class="nav-item active">
+          <a  class="nav-link" href="{{ url_for('deconnexion') }}">Vous êtes connecté. Déconnexion ({{current_user.prenom}})</a>
+        </li>
+        {% else %}
+        <li class="nav-item active">
+          <a  class="nav-link" href="{{ url_for('connexion') }}">Vous êtes déconnecté. Connexion</a>
+        </li>
+        {% endif %} 
+    </ul>
   </div>
 </nav>

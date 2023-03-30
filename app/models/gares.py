@@ -36,7 +36,7 @@ class Gares(db.Model):
 
     attributs = db.relationship('Attributs', backref='attributss', lazy=True)
 
-#TABLES DE RELATIONS - Verifier la première (lignes ou gares_lignes?)
+#TABLES DE RELATIONS
     gares_ligness = db.relationship(
         'Lignes', secondary=gares_lignes, backref="gares_ligness")
     
